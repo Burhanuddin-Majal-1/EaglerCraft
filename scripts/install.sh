@@ -5,8 +5,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SERVER_DIR="$ROOT/server"
 PROXY_DIR="$ROOT/proxy"
 
-# This project targets Minecraft Java 26.3.
 : "${MC_VERSION:=26.3}"
+: "${EAGLERXSERVER_VERSION:=1.1.1}"
 : "${PAPERMC_USER_AGENT:=EaglerCraft-Server/1.0 (GitHub project)}"
 
 command -v curl >/dev/null || { echo "ERROR: curl is required"; exit 1; }
@@ -50,7 +50,11 @@ curl -fL --retry 3 \
   "https://api.papermc.io/v2/projects/velocity/versions/$VELOCITY_VERSION/builds/$VELOCITY_BUILD/downloads/$VELOCITY_NAME" \
   -o "$PROXY_DIR/velocity.jar"
 
-printf '\nInstalled:\nPaper Minecraft %s (latest stable build)\nVelocity %s build %s\n' \
-  "$MC_VERSION" "$VELOCITY_VERSION" "$VELOCITY_BUILD"
+echo "==> Downloading EaglerXServer $EAGLERXSERVER_VERSION for Velocity"
+EAGLERX_URL="https://github.com/lax1dude/eaglerxserver/releases/download/v$EAGLERXSERVER_VERSION/EaglerXServer.jar"
+curl -fL --retry 3 "$EAGLERX_URL" -o "$PROXY_DIR/plugins/EaglerXServer.jar"
+
+printf '\nInstalled:\nPaper Minecraft %s (latest stable build)\nVelocity %s build %s\nEaglerXServer %s\n' \
+  "$MC_VERSION" "$VELOCITY_VERSION" "$VELOCITY_BUILD" "$EAGLERXSERVER_VERSION"
 echo "Java detected: $JAVA_MAJOR"
-echo "Next: configure Velocity forwarding and verify the Eaglercraft 26.3 WebSocket bridge before connecting browser clients."
+echo "Next: boot once to generate configs, then follow the port/forwarding setup in README.md."
