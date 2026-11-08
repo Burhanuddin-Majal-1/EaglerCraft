@@ -1,0 +1,29 @@
+# Runtime binaries
+*.jar
+
+# Paper runtime
+/server/world/
+/server/world_nether/
+/server/world_the_end/
+/server/plugins/*
+!/server/plugins/.gitkeep
+/server/logs/
+/server/cache/
+/server/libraries/
+/server/crash-reports/
+/server/config/paper-global.yml
+/server/config/paper-world-defaults.yml
+/server/eula.txt
+/server/server.properties
+
+# Velocity runtime
+/proxy/plugins/*
+!/proxy/plugins/.gitkeep
+/proxy/logs/
+/proxy/velocity.toml
+/proxy/forwarding.secret
+
+# Generated runtime state
+*.log
+*.pid
+.DS_Store
