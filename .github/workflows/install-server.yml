@@ -1,0 +1,56 @@
+name: Download and Install Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      minecraft_version:
+        description: "Paper Minecraft version"
+        required: true
+        default: "26.3"
+      eaglerxserver_version:
+        description: "EaglerXServer release"
+        required: true
+        default: "1.1.1"
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: Download Paper, Velocity and EaglerXServer
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository (includes scripts/install.sh)
+        uses: actions/checkout@v4
+
+      - name: Install Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Run install.sh
+        env:
+          MC_VERSION: ${{ inputs.minecraft_version }}
+          EAGLERXSERVER_VERSION: ${{ inputs.eaglerxserver_version }}
+        run: |
+          chmod +x scripts/install.sh
+          bash scripts/install.sh
+
+      - name: Upload downloaded server files
+        uses: actions/upload-artifact@v4
+        with:
+          name: eaglercraft-server-${{ inputs.minecraft_version }}
+          path: |
+            server/paper.jar
+            proxy/velocity.jar
+            proxy/plugins/EaglerXServer.jar
+          if-no-files-found: error
+          retention-days: 7
