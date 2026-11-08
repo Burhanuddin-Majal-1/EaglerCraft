@@ -34,21 +34,28 @@ fi
 
 curl -fL --retry 3 "$PAPER_URL" -o "$SERVER_DIR/paper.jar"
 
-echo "==> Resolving latest Velocity build"
-VELOCITY_META="$(curl -fsSL "https://api.papermc.io/v2/projects/velocity")"
-VELOCITY_VERSION="$(jq -r '.versions[-1]' <<<"$VELOCITY_META")"
-[[ "$VELOCITY_VERSION" != "null" && -n "$VELOCITY_VERSION" ]] || {
-  echo "ERROR: Could not resolve a Velocity version"
+echo "==> Resolving latest Velocity build (PaperMC Fill API v3)"
+VELOCITY_META="$(curl -fsSL -H "User-Agent: $PAPERMC_USER_AGENT" \
+  "https://fill.papermc.io/v3/projects/velocity")"
+VELOCITY_VERSION="$(jq -r '.versions | to_entries[0].value[0] // empty' <<<"$VELOCITY_META")"
+[[ -n "$VELOCITY_VERSION" && "$VELOCITY_VERSION" != "null" ]] || {
+  echo "ERROR: Could not resolve an available Velocity version"
   exit 1
 }
 
-VELOCITY_VERSION_META="$(curl -fsSL "https://api.papermc.io/v2/projects/velocity/versions/$VELOCITY_VERSION")"
-VELOCITY_BUILD="$(jq -r '.builds[-1]' <<<"$VELOCITY_VERSION_META")"
-VELOCITY_BUILD_META="$(curl -fsSL "https://api.papermc.io/v2/projects/velocity/versions/$VELOCITY_VERSION/builds/$VELOCITY_BUILD")"
-VELOCITY_NAME="$(jq -r '.downloads.application.name' <<<"$VELOCITY_BUILD_META")"
-curl -fL --retry 3 \
-  "https://api.papermc.io/v2/projects/velocity/versions/$VELOCITY_VERSION/builds/$VELOCITY_BUILD/downloads/$VELOCITY_NAME" \
-  -o "$PROXY_DIR/velocity.jar"
+VELOCITY_BUILDS="$(curl -fsSL -H "User-Agent: $PAPERMC_USER_AGENT" \
+  "https://fill.papermc.io/v3/projects/velocity/versions/$VELOCITY_VERSION/builds")"
+VELOCITY_BUILD="$(jq -r 'first(.[] | select(.channel == "STABLE") | .id) // empty' <<<"$VELOCITY_BUILDS")"
+VELOCITY_URL="$(jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty' <<<"$VELOCITY_BUILDS")"
+
+if [[ -z "$VELOCITY_BUILD" || -z "$VELOCITY_URL" || "$VELOCITY_URL" == "null" ]]; then
+  echo "ERROR: No stable Velocity build/download URL found for version $VELOCITY_VERSION."
+  echo "PaperMC response (first 1000 chars):"
+  printf '%s' "$VELOCITY_BUILDS" | head -c 1000
+  exit 1
+fi
+
+curl -fL --retry 3 -H "User-Agent: $PAPERMC_USER_AGENT" "$VELOCITY_URL" -o "$PROXY_DIR/velocity.jar"
 
 echo "==> Downloading EaglerXServer $EAGLERXSERVER_VERSION for Velocity"
 EAGLERX_URL="https://github.com/lax1dude/eaglerxserver/releases/download/v$EAGLERXSERVER_VERSION/EaglerXServer.jar"
