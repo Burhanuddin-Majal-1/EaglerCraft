@@ -11,7 +11,7 @@ Eaglercraft browser client
 Velocity + EaglerXServer
         | private backend connection
         v
-Paper :25565 (localhost)
+Paper :25566 (localhost)
 ```
 
 Java Edition players use the Velocity Java listener on **25565**. Eaglercraft players use the additional EaglerXServer listener on **8082**. The browser game page itself can be hosted separately (for example, GitHub Pages); EaglerXServer handles the Eaglercraft protocol on the proxy.
