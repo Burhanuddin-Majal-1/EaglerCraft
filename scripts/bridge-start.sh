@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 find_listener_config() {
-  find "$ROOT/proxy/plugins" -type f \\( -iname 'listeners.yaml' -o -iname 'listeners.yml' \\) -print -quit 2>/dev/null || true
+  find "$ROOT/proxy/plugins" -type f \( -iname 'listeners.yaml' -o -iname 'listeners.yml' \) -print -quit 2>/dev/null || true
 }
 
 if [[ -f server/paper.pid || -f proxy/velocity.pid ]]; then
