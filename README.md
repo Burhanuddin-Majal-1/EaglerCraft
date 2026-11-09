@@ -28,7 +28,7 @@ Java Edition players use the Velocity Java listener on **25565**. Eaglercraft pl
 ## Requirements
 
 - Linux environment (GitHub Codespaces works for development)
-- Java 25 or newer for Minecraft/Paper 26.3
+- Java 25 or newer for Paper 26.2
 - `curl` and `jq`
 
 ## Install
@@ -64,9 +64,9 @@ The installer downloads Paper 26.2, Velocity, and EaglerXServer 1.1.1. It does n
 
 ## Compatibility notes
 
-- EaglerXServer's documented client support is EaglercraftX 1.8, Eaglercraft 1.12.2, and Eaglercraft 1.5.2. It is not evidence that an unrelated client build labelled **26.3** is compatible.
-- Minecraft Java 26.3 is the backend target, not the Eaglercraft client protocol version.
-- For EaglercraftX 1.8 clients joining Paper 26.3, install a current ViaVersion build on the Paper backend and test login, movement, inventory, and world interactions. Compatibility is not guaranteed until tested.
+- EaglerXServer's documented client support is EaglercraftX 1.8, Eaglercraft 1.12.2, and Eaglercraft 1.5.2. That documented support does not establish compatibility with the **26.2 Zeus** browser client.
+- Minecraft Java **26.2** is the Paper backend target; the browser client's “26.2 Zeus” label does not establish protocol compatibility.
+- For EaglercraftX 1.8 clients joining Paper 26.2, install a current ViaVersion build on the Paper backend and test login, movement, inventory, and world interactions. Compatibility is not guaranteed until tested.
 - If your intended browser client is specifically a Eaglercraft 26.2 Zeus client, this stack still needs a bridge/client compatibility test before it can be called supported.
 
 ## Start / stop
