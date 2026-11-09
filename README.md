@@ -14,7 +14,7 @@ Velocity + EaglerXServer
 Paper :25566 (localhost)
 ```
 
-Java Edition players use the Velocity Java listener on **25565**. Eaglercraft players use the additional EaglerXServer listener on **8082**. The browser game page itself can be hosted separately (for example, GitHub Pages); EaglerXServer handles the Eaglercraft protocol on the proxy.
+Java Edition players use the Velocity Java listener on **25565**. Eaglercraft players use the additional EaglerXServer listener on **8082**. The browser game page itself can be hosted separately (for example, GitHub Pages); EaglerXServer handles the Eaglercraft protocol on the proxy. Run the bridge setup script after the first Velocity boot so the plugin has generated its config.
 
 ## Components
 
@@ -33,7 +33,7 @@ Java Edition players use the Velocity Java listener on **25565**. Eaglercraft pl
 
 ## Install
 
-The default backend target is Minecraft Java **26.2 Zeus**:
+The default backend target is Minecraft Java **26.2**:
 
 ```bash
 chmod +x scripts/*.sh
@@ -46,7 +46,7 @@ Override the backend version only if you intentionally want a different Paper ve
 MC_VERSION=26.3 ./scripts/install.sh
 ```
 
-The installer downloads Paper, Velocity, and EaglerXServer 1.1.1. It does not download the 26.2 Zeus browser client or copy client files into this repository. Get the client from the official [Eaglercraft downloads page](https://eaglercraft.com/downloads), and only add it to `web/` after checking the project's redistribution terms.
+The installer downloads Paper 26.2, Velocity, and EaglerXServer 1.1.1. It does not download the 26.2 Zeus browser client or copy client files into this repository. Get the client from the official [Eaglercraft downloads page](https://eaglercraft.com/downloads), and only add it to `web/` after checking the project's redistribution terms.
 
 ## First boot and configuration
 
@@ -57,7 +57,8 @@ The installer downloads Paper, Velocity, and EaglerXServer 1.1.1. It does not do
 5. In `server/server.properties`, set `server-port=25566`, `server-ip=127.0.0.1`, and `online-mode=false`. Keep Paper private behind Velocity.
 6. Configure Velocity modern forwarding and copy the generated forwarding secret into Paper's matching Paper/Velocity forwarding configuration. Keep that secret private.
 7. Start the network again so EaglerXServer creates its configuration folder and default listener config.
-8. In EaglerXServer's generated `listeners` config, set `inject_address` to `0.0.0.0:8082` and enable `velocity_clone_listener` for that listener. This adds the Eaglercraft WebSocket listener on 8082 while keeping Java Edition on 25565. The injection address must correspond to a Velocity listener; see the upstream config reference.
+8. Stop the network, then run `./scripts/configure-bridge.sh`. It adds a separate EaglerXServer listener named `eaglercraft-8082` at `0.0.0.0:8082`, with Velocity's `velocity_clone_listener` enabled. This keeps the Java listener on 25565 and Paper private on 25566.
+9. Start the network again with `./scripts/start.sh`.
 
 **Important:** EaglerXServer does not serve your browser game's HTML page. Host the client page separately and configure its WebSocket address to your public host on port 8082. Use HTTPS/WSS when the page is served over HTTPS.
 
