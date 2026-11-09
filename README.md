@@ -5,7 +5,7 @@ A Paper + Velocity network with Eaglercraft browser-client support.
 ## Architecture
 
 ```text
-Eaglercraft browser client
+Eaglercraft 26.2 Zeus browser client
         | WebSocket :8082
         v
 Velocity + EaglerXServer
@@ -20,7 +20,7 @@ Java Edition players use the Velocity Java listener on **25565**. Eaglercraft pl
 
 - **Paper** — worlds and Bukkit plugins
 - **Velocity** — proxy and Java Edition listener
-- **EaglerXServer 1.1.1** — maintained Eaglercraft protocol bridge for Velocity
+- **EaglerXServer 1.1.1** — Velocity bridge for documented legacy Eaglercraft clients; 26.2 Zeus support is unverified
 - **ViaVersion** — needed on the Paper backend if connecting legacy Eaglercraft 1.8 clients to a newer Paper version; compatibility must be tested with the chosen releases
 
 > This project uses EaglerXServer rather than the older EaglercraftXBungee/EaglercraftXVelocity plugins. The upstream EaglerXServer project recommends replacing those older plugins.
@@ -33,7 +33,7 @@ Java Edition players use the Velocity Java listener on **25565**. Eaglercraft pl
 
 ## Install
 
-The default backend target is Minecraft Java **26.3**:
+The default backend target is Minecraft Java **26.2 Zeus**:
 
 ```bash
 chmod +x scripts/*.sh
@@ -46,7 +46,7 @@ Override the backend version only if you intentionally want a different Paper ve
 MC_VERSION=26.3 ./scripts/install.sh
 ```
 
-The installer downloads Paper, Velocity, and EaglerXServer 1.1.1. It does not download a browser client or copy copyrighted client files into this repository.
+The installer downloads Paper, Velocity, and EaglerXServer 1.1.1. It does not download the 26.2 Zeus browser client or copy client files into this repository. Get the client from the official [Eaglercraft downloads page](https://eaglercraft.com/downloads), and only add it to `web/` after checking the project's redistribution terms.
 
 ## First boot and configuration
 
@@ -66,7 +66,7 @@ The installer downloads Paper, Velocity, and EaglerXServer 1.1.1. It does not do
 - EaglerXServer's documented client support is EaglercraftX 1.8, Eaglercraft 1.12.2, and Eaglercraft 1.5.2. It is not evidence that an unrelated client build labelled **26.3** is compatible.
 - Minecraft Java 26.3 is the backend target, not the Eaglercraft client protocol version.
 - For EaglercraftX 1.8 clients joining Paper 26.3, install a current ViaVersion build on the Paper backend and test login, movement, inventory, and world interactions. Compatibility is not guaranteed until tested.
-- If your intended browser client is specifically a different Eaglercraft 26.3 protocol, this stack still needs a bridge/client compatibility test before it can be called supported.
+- If your intended browser client is specifically a Eaglercraft 26.2 Zeus client, this stack still needs a bridge/client compatibility test before it can be called supported.
 
 ## Start / stop
 
