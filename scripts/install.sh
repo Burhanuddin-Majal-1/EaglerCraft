@@ -15,7 +15,7 @@ command -v java >/dev/null || { echo "ERROR: Java 25 or newer is required"; exit
 
 JAVA_MAJOR="$(java -version 2>&1 | awk -F '[."]' '/version/ { if ($2 == "1") print $3; else print $2; exit }')"
 if [[ -z "$JAVA_MAJOR" || "$JAVA_MAJOR" -lt 25 ]]; then
-  echo "ERROR: Minecraft 26.3 requires Java 25 or newer. Detected: ${JAVA_MAJOR:-unknown}"
+  echo "ERROR: Minecraft 26.2 requires Java 25 or newer. Detected: ${JAVA_MAJOR:-unknown}"
   exit 1
 fi
 
