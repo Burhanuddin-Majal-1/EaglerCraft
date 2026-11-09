@@ -31,6 +31,16 @@ Java Edition players use the Velocity Java listener on **25565**. Eaglercraft pl
 - Java 25 or newer for Paper 26.2
 - `curl` and `jq`
 
+## One-command startup
+
+From the repository root, run:
+
+```bash
+chmod +x scripts/*.sh && ./scripts/bridge-start.sh
+```
+
+This installs missing server/plugin JARs, performs the first boot if EaglerXServer has not generated its listener config yet, configures the WebSocket listener on **8082**, and starts the network. If the server asks you to accept the Minecraft EULA, review it and accept it yourself before starting again.
+
 ## Install
 
 The default backend target is Minecraft Java **26.2**:
