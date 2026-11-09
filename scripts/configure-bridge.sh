@@ -29,7 +29,7 @@ if re.search(r'(?m)^\s*-\s*listener_name:\s*eaglercraft-8082\s*$', text):
     raise SystemExit(0)
 
 # EaglerXServer's Velocity config uses a listener_list YAML sequence.
-match = re.search(r'(?m)^listener_list:\\s*(?:\\[\\s*\\])?\\s*(?:#.*)?$', text)
+match = re.search(r'(?m)^listener_list:\s*(?:\[\s*\])?\s*(?:#.*)?$', text)
 if not match:
     raise SystemExit(
         f"ERROR: listener_list was not found in {path}. "
