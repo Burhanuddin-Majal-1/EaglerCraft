@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SERVER_DIR="$ROOT/server"
 PROXY_DIR="$ROOT/proxy"
 
-: "${MC_VERSION:=26.3}"
+: "${MC_VERSION:=26.2}"
 : "${EAGLERXSERVER_VERSION:=1.1.1}"
 : "${PAPERMC_USER_AGENT:=EaglerCraft-Server/1.0 (GitHub project)}"
 
