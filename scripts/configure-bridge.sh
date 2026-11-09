@@ -9,7 +9,7 @@ command -v python3 >/dev/null || {
   exit 1
 }
 
-CONFIG="$(find "$PLUGIN_DIR" -type f \\( -iname 'listeners.yaml' -o -iname 'listeners.yml' \\) -print -quit 2>/dev/null || true)"
+CONFIG="$(find "$PLUGIN_DIR" -type f \( -iname 'listeners.yaml' -o -iname 'listeners.yml' \) -print -quit 2>/dev/null || true)"
 if [[ -z "$CONFIG" ]]; then
   echo "ERROR: EaglerXServer listeners.yaml was not found."
   echo "Run ./scripts/start.sh once, wait for Velocity to finish loading, then run ./scripts/stop.sh."
@@ -24,8 +24,6 @@ import sys
 
 path = Path(sys.argv[1])
 text = path.read_text(encoding="utf-8")
-lines = text.splitlines()
-
 if re.search(r'(?m)^\s*-\s*listener_name:\s*eaglercraft-8082\s*$', text):
     print(f"Bridge listener already exists in {path}")
     raise SystemExit(0)
